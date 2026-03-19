@@ -1,7 +1,18 @@
 {
   "name": "mn-research",
   "version": "0.1.0",
+  "description": "Research workspace plugin for MarginNote 4.",
   "private": true,
+  "license": "MIT",
+  "author": "Kangwei Xia",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xkwxdyy/mnresearch.git"
+  },
+  "bugs": {
+    "url": "https://github.com/xkwxdyy/mnresearch/issues"
+  },
+  "homepage": "https://github.com/xkwxdyy/mnresearch#readme",
   "scripts": {
     "build": "node scripts/build-release.js",
     "dev": "cd src && zip -r -q ../mn-research-dev.mnaddon .",
