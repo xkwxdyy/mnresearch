@@ -1,0 +1,14 @@
+# Project-level Codex configuration.
+#
+# This file exists to mark this repo as a Codex project config root.
+
+[mcp_servers.mn-docs]
+command = "node"
+args = [
+  "/Users/xiakangwei/Nutstore/Github/repository/MN-Addon/MNAddon-develop/marginnote-addon-docs/mcp/cli.mjs",
+  "--root",
+  "/Users/xiakangwei/Nutstore/Github/repository/MN-Addon/MNAddon-develop/marginnote-addon-docs",
+  "--silent",
+  "--prebuild",
+]
+env = { HF_ENDPOINT = "https://hf-mirror.com" }
