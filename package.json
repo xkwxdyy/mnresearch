@@ -1,6 +1,6 @@
 {
   "name": "mn-research",
-  "version": "0.1.0",
+  "version": "0.1.18",
   "description": "Research workspace plugin for MarginNote 4.",
   "private": true,
   "license": "MIT",
@@ -15,7 +15,7 @@
   "homepage": "https://github.com/xkwxdyy/mnresearch#readme",
   "scripts": {
     "build": "node scripts/build-release.js",
-    "dev": "cd src && zip -r -q ../mn-research-dev.mnaddon .",
+    "dev": "cd src && zip -r -q ../mn-research-dev.mnaddon . -x '*.DS_Store'",
     "version": "node scripts/bump-version.js",
     "version:patch": "node scripts/bump-version.js patch",
     "version:minor": "node scripts/bump-version.js minor",

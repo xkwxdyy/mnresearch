@@ -26,6 +26,24 @@
 - 除 `main.js `外任何文件禁止调用 `JSB.require(...)`(避免重复/污染全局导入行为)。
 - 优先用ES6语法(除非与运行时不兼容);保持文件职责单一,不要把UI/数据/命令处理混在一起。
 
+## MN Research 项目特定规则
+
+- WebView UI 继续按当前分层维护: `research.html` + `styles/research.css` + `scripts/*.js`，不要把大块 UI 逻辑塞回 native 入口文件。
+- `CHANGELOG.md` 记录用户可感知的行为变化；规划与迁移分析文档保留在 `docs/`。
+
+### Markdown 渲染规则(强制)
+
+- 用户写入的研究内容，在所有展示位都应按 Markdown 渲染，而不只是输入它的那个编辑器。
+- 这包括：问题标题/描述、问题表述、判断、策略、障碍、样例、认识、文献摘要、Focus 上下文、时间线相关正文与研究内容预览。
+- 不要把 Markdown 渲染误用于纯元数据：表单 `value`、`textarea` 初始值、`data-*` 属性、ID、状态标签、计数、年份、DOI、venue 等结构化字段保持纯文本。
+- 若同一字段在一个视图里按 Markdown 渲染、在另一处退回纯转义文本，这算 bug，不算“展示差异”。
+
+### 下拉菜单规则(强制)
+
+- `mnresearch` WebView 内所有下拉菜单都使用自定义 HTML dropdown，不使用原生 `<select>`。
+- 原因不是风格偏好，而是原生 `<select>` 无法稳定承载 Markdown 富文本标签，也会破坏当前面板的交互一致性。
+- 选项标签如果包含用户研究内容，应继续按 Markdown 渲染。
+
 ## 全局与入口对象要点(先查Global Variables页)
 
 - 入口通常是 `JSB.newAddon=function(mainPath){...}`并返回插件实例。

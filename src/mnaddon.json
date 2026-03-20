@@ -1,8 +1,8 @@
 {
-  "addonid": "mnresearch",
+  "addonid": "marginnote.extension.mnresearch",
   "author": "Kangwei Xia",
   "title": "MN Research",
-  "version": "0.1.0",
-  "marginnote_version_min": "4.2.3",
+  "version": "0.1.18",
+  "marginnote_version_min": "3.6.11",
   "cert_key": ""
 }

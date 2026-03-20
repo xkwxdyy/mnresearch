@@ -2,7 +2,14 @@ const fs = require("fs");
 const path = require("path");
 const { execFileSync, execSync } = require("child_process");
 
+function shouldSkipName(name) {
+  return name === ".DS_Store";
+}
+
 function copyRecursiveSync(src, dest) {
+  if (shouldSkipName(path.basename(src))) {
+    return;
+  }
   if (fs.statSync(src).isDirectory()) {
     if (!fs.existsSync(dest)) fs.mkdirSync(dest);
     fs.readdirSync(src).forEach((child) => {
@@ -15,6 +22,7 @@ function copyRecursiveSync(src, dest) {
 
 function getAllFiles(dir, files = []) {
   fs.readdirSync(dir).forEach((file) => {
+    if (shouldSkipName(file)) return;
     const name = path.join(dir, file);
     if (fs.statSync(name).isDirectory()) {
       getAllFiles(name, files);

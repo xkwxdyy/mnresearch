@@ -45,7 +45,8 @@ function nextVersion(current, bump) {
 }
 
 function main() {
-  const bump = process.argv[2];
+  const args = process.argv.slice(2).filter((arg) => arg !== "--");
+  const bump = args[0];
   if (!bump) {
     console.log("Usage: node scripts/bump-version.js <patch|minor|major|x.y.z>");
     process.exit(1);
@@ -61,32 +62,39 @@ function main() {
   const current = pkg.version || addon.version;
   const next = nextVersion(current, bump);
 
+  const tagName = `v${next}`;
+  let insideGitRepo = false;
+  try {
+    execSync("git rev-parse --is-inside-work-tree", {
+      stdio: "ignore",
+    });
+    insideGitRepo = true;
+  } catch (error) {
+    insideGitRepo = false;
+  }
+
+  let worktreeCleanBefore = false;
+  if (insideGitRepo) {
+    try {
+      worktreeCleanBefore = !execSync("git status --porcelain").toString().trim();
+    } catch (error) {
+      worktreeCleanBefore = false;
+    }
+  }
+
   pkg.version = next;
   addon.version = next;
 
   writeJson(pkgPath, pkg);
   writeJson(addonPath, addon);
 
-  const tagName = `v${next}`;
-
-  try {
-    execSync("git rev-parse --is-inside-work-tree", {
-      stdio: "ignore",
-    });
-  } catch (error) {
+  if (!insideGitRepo) {
     console.log(`Version bumped: ${current} -> ${next}`);
     console.log("Git repository not detected, skipped commit and tag.");
     return;
   }
 
-  let status = "";
-  try {
-    status = execSync("git status --porcelain").toString().trim();
-  } catch (error) {
-    status = "";
-  }
-
-  if (status) {
+  if (!worktreeCleanBefore) {
     console.log(`Version bumped: ${current} -> ${next}`);
     console.log("Git working tree not clean, skipped commit and tag.");
     return;
